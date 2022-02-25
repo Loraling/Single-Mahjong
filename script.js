@@ -26,6 +26,7 @@ const cardX = 38;
 const cardY = 48;
 const trashXPadding = 286;
 const trashYPadding = 100;
+const yogu = new Array(("🀇","🀏","🀐","🀘","🀙","🀡","🀀","🀁","🀂","🀃","🀆","🀅","🀄");
 
 ctx.font = '42px Arial';
 
@@ -249,9 +250,17 @@ function doKkang(c) {
   }
 }
 
-function chkPoint(head, body) {
 
-  // 추가
+
+function chkPoint(head, body) { // 추후 후로 기능 넣으면 후로 위치 파악하는 기능 넣기 ex)if body[0].length = 4 && body[0][0] = -1
+  var isTan = 1;
+  for (int i = 0; i < 6; i++) {
+    if (head[0].indexOf(yogu[i]) != -1) isTan = 0;
+    if (body[0].indexOf(yogu[i]) != -1) isTan = 0;
+    if (body[1].indexOf(yogu[i]) != -1) isTan = 0;
+    if (body[2].indexOf(yogu[i]) != -1) isTan = 0;
+    if (body[3].indexOf(yogu[i]) != -1) isTan = 0;
+  }
 
 }
 
