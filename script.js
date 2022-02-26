@@ -26,7 +26,7 @@ const cardX = 38;
 const cardY = 48;
 const trashXPadding = 286;
 const trashYPadding = 100;
-const yogu = new Array(("🀇","🀏","🀐","🀘","🀙","🀡","🀀","🀁","🀂","🀃","🀆","🀅","🀄");
+const yogu = new Array("🀇","🀏","🀐","🀘","🀙","🀡","🀀","🀁","🀂","🀃","🀆","🀅","🀄");
 
 ctx.font = '42px Arial';
 
@@ -105,7 +105,7 @@ function check(cnt, array, head, body) {
       ctx.fillStyle = "#DD2200"
       ctx.fillRect(370, 350, 100, 40);
       ctx.fillStyle = "#000000"
-    }
+    } // else if (텐파이 체크)
     return;
   } 
   this.chkArray = array;
@@ -250,17 +250,67 @@ function doKkang(c) {
   }
 }
 
+function bodyCheck(body) {
+  if (body.length == 3) {
+    // 밍또이쯔 0
+    if (body[0] + 1 == body[1] && body[1] + 1 == body[2]) // 슌쯔
+      return 1;
+    if (body.lastIndexOf(body[0]) == 2) // 안커
+      return 2;
+  } else if (body.length == 4) {
+    if (body.lastIndexOf(body[0]) == 3) // 안깡
+      return 3;
+    // 밍슌 4
+    // 밍커 5
+  } else if (body.length == 5) {
+    // 밍깡 6
+  } else return -1; // 머리
+}
+
 
 
 function chkPoint(head, body) { // 추후 후로 기능 넣으면 후로 위치 파악하는 기능 넣기 ex)if body[0].length = 4 && body[0][0] = -1
-  var isTan = 1;
-  for (int i = 0; i < 6; i++) {
-    if (head[0].indexOf(yogu[i]) != -1) isTan = 0;
-    if (body[0].indexOf(yogu[i]) != -1) isTan = 0;
-    if (body[1].indexOf(yogu[i]) != -1) isTan = 0;
-    if (body[2].indexOf(yogu[i]) != -1) isTan = 0;
-    if (body[3].indexOf(yogu[i]) != -1) isTan = 0;
+  var isdama = 1;
+  for (i = 0; i < 5; i++) {
+    if (i == 4) {
+      if (bodyCheck(head[0]) == 0)
+        isdama = 0;
+    } else {
+      if (bodyCheck(body[wait]) > 3)
+        isdama = 0;
+    }
   }
+  for (wait = 0; wait < 5; wait++) {
+    if (wait == 4) {
+      if (head[0].indexOf(hand[hand.length - 1].ch) == -1)
+        continue;
+    } else {
+      if (body[wait].indexOf(hand[hand.length - 1].ch) == -1)
+        continue;
+    }
+    var isTan = 1; // 탕야오
+    for (i = 0; i < 6; i++) {
+      if (head[0].indexOf(yogu[i]) != -1) isTan = 0;
+      if (body[0].indexOf(yogu[i]) != -1) isTan = 0;
+      if (body[1].indexOf(yogu[i]) != -1) isTan = 0;
+      if (body[2].indexOf(yogu[i]) != -1) isTan = 0;
+      if (body[3].indexOf(yogu[i]) != -1) isTan = 0;
+    }
+
+    var isIpe = 0; // 이페코
+    for (i = 0; i < 4; i++) {
+      if (bodyCheck(body[i]) == 1) {
+        for (j = i + 1; j < 4; j++) {
+          if (JSON.stringify(body[i]) == JSON.stringify(body[j]))
+            isIpe = 1;
+        }
+      }
+    }
+
+
+  }
+
+
 
 }
 
