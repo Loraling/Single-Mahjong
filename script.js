@@ -11,6 +11,7 @@ var hand = new Array();
 var deck = new Array();
 var chkArray = new Array();
 var kkang = new Array();
+var wait = new Array();
 var max = new pair(new Array(), new Array());
 var maxPoint = 0;
 var n = 0;
@@ -18,6 +19,7 @@ var tsumocnt = 0;
 var canKkang = 0;
 var canWin = 0;
 var choosing = 0;
+var isTen = 0;
 var canvas = document.getElementById("jsCanvas");
 var ctx = canvas.getContext("2d");
 const xPadding = 127;
@@ -105,7 +107,31 @@ function check(cnt, array, head, body) {
       ctx.fillStyle = "#DD2200"
       ctx.fillRect(370, 350, 100, 40);
       ctx.fillStyle = "#000000"
-    } // else if (텐파이 체크)
+    } else if ((head.length == 1 && body.length == 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) {
+      if ((head.length == 0 && body.length == 4) || (head.length == 6)) {
+        isTen = 1;
+        wait.push(array[0]);
+        wait.push(array[1]);
+      } else {
+          this.a = mahjong.indexOf(array[0]);
+          this.b = mahjong.indexOf(array[1]);
+          this.c = mahjong.indexOf(array[2]);
+        if (array[0] == array[1]) {
+          isTen = 1;
+          wait.push(array[0]);
+        }
+        if (a + 1 == b && b < 27) {
+          isTen = 1;
+          if (a % 9 != 0) wait.push(mahjong[a - 1]);
+          if (b % 9 != 8) wait.push(mahjong[b + 1]);
+        }
+        if (b + 1 == c && c < 27) {
+          isTen = 1;
+          if (b % 9 != 0) wait.push(mahjong[b - 1]);
+          if (c % 9 != 8) wait.push(mahjong[c + 1]);
+        }
+      }
+    }
     return;
   } 
   this.chkArray = array;
@@ -251,9 +277,12 @@ function doKkang(c) {
 }
 
 function bodyCheck(body) {
+  this.a = mahjong.indexOf(body[0]);
+  this.b = mahjong.indexOf(body[1]);
+  this.c = mahjong.indexOf(body[2]);
   if (body.length == 3) {
     // 밍또이쯔 0
-    if (body[0] + 1 == body[1] && body[1] + 1 == body[2]) // 슌쯔
+    if (a + 1 == b && b + 1 == c) // 슌쯔
       return 1;
     if (body.lastIndexOf(body[0]) == 2) // 안커
       return 2;
@@ -306,6 +335,7 @@ function chkPoint(head, body) { // 추후 후로 기능 넣으면 후로 위치 
         }
       }
     }
+
 
 
   }
