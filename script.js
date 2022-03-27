@@ -94,7 +94,7 @@ function lose() {
   tsumocnt = 19;
 }
 
-function check(cnt, array, head, body) {
+function check(cnt, array, head, body, after = 0) {
   var useToHead = false;
   if (cnt >= array.length) {
     if (max.body.length < body.length || (max.body.length == body.length && max.head.length < head.length)) max = new pair(head, body);
@@ -107,15 +107,37 @@ function check(cnt, array, head, body) {
       ctx.fillStyle = "#DD2200"
       ctx.fillRect(370, 350, 100, 40);
       ctx.fillStyle = "#000000"
+    } else if (((head.length == 1 && body.length == 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) && after == 1) { // 기리 이후에 하는 대기패 체크
+      if ((head.length == 0 && body.length == 4) || (head.length == 6)) { // 단기대기
+        isTen = 1;
+        wait.push(array[0]);
+      } else {
+        this.a = mahjong.indexOf(array[0]);
+        this.b = mahjong.indexOf(array[1]);
+        if (array[0] == array[1]) { // 샤보대기
+          isTen = 1;
+          wait.push(array[0]);
+          wait.push(head[0][0]);
+        }
+        if (a / 9 == b / 9 && a + 1 == b && b < 27) { // 연짱, 변짱 대기
+          isTen = 1;
+          if (a % 9 != 0) wait.push(mahjong[a - 1]);
+          if (b % 9 != 8) wait.push(mahjong[b + 1]);
+        }
+        if (a / 9 == b / 9 && a + 2 == b && b < 27) { // 간짱 대기
+          isTen = 1;
+          wait.push(mahjong[a + 1]);
+        }
+      }
     } else if ((head.length == 1 && body.length == 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) {
       if ((head.length == 0 && body.length == 4) || (head.length == 6)) {
         isTen = 1;
         wait.push(array[0]);
         wait.push(array[1]);
       } else {
-          this.a = mahjong.indexOf(array[0]);
-          this.b = mahjong.indexOf(array[1]);
-          this.c = mahjong.indexOf(array[2]);
+        this.a = mahjong.indexOf(array[0]);
+        this.b = mahjong.indexOf(array[1]);
+        this.c = mahjong.indexOf(array[2]);
         if (array[0] == array[1]) {
           isTen = 1;
           wait.push(array[0]);
@@ -405,6 +427,11 @@ function tsumo(num) {
       hand[num].tShow((tsumocnt % 6) * cardX + trashXPadding, trashYPadding + Math.floor(tsumocnt / 6) * cardY);
       hand.splice(num, 1);
       hand.sort(compare);
+      for (i = 0; i < hand.length; i++) {
+        chkArray[i] = hand[i].ch[0];
+      }
+      new check(-1, chkArray, new Array(), kkang, 1);
+      
       hand.push(new card(deck.splice(0, 1)));
     } else  { // 깡으로 쯔모할 때
       hand.push(new card(deck.splice(deck.length-1, 1)));
