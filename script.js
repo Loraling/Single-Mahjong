@@ -107,7 +107,7 @@ function check(cnt, array, head, body, after = 0) {
       ctx.fillStyle = "#DD2200"
       ctx.fillRect(370, 350, 100, 40);
       ctx.fillStyle = "#000000"
-    } else if (((head.length == 1 && body.length == 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) && after == 1) { // 기리 이후에 하는 대기패 체크
+    } else if (((head.length >= 1 && body.length >= 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) && after == 1) { // 기리 이후에 하는 대기패 체크
       if ((head.length == 0 && body.length == 4) || (head.length == 6)) { // 단기대기
         isTen = 1;
         wait.push(array[0]);
@@ -129,7 +129,7 @@ function check(cnt, array, head, body, after = 0) {
           wait.push(mahjong[a + 1]);
         }
       }
-    } else if ((head.length == 1 && body.length == 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) {
+    } else if ((head.length >= 1 && body.length >= 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) {
       if ((head.length == 0 && body.length == 4) || (head.length == 6)) {
         isTen = 1;
       } else {
