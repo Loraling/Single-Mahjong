@@ -132,26 +132,25 @@ function check(cnt, array, head, body, after = 0) {
     } else if ((head.length == 1 && body.length == 3) || (head.length == 0 && body.length == 4) || (head.length == 6)) {
       if ((head.length == 0 && body.length == 4) || (head.length == 6)) {
         isTen = 1;
-        wait.push(array[0]);
-        wait.push(array[1]);
       } else {
         this.a = mahjong.indexOf(array[0]);
         this.b = mahjong.indexOf(array[1]);
         this.c = mahjong.indexOf(array[2]);
         if (array[0] == array[1]) {
           isTen = 1;
-          wait.push(array[0]);
         }
-        if (a + 1 == b && b < 27) {
+        if (a / 9 == b / 9 && a + 1 == b && b < 27) {
           isTen = 1;
-          if (a % 9 != 0) wait.push(mahjong[a - 1]);
-          if (b % 9 != 8) wait.push(mahjong[b + 1]);
         }
-        if (b + 1 == c && c < 27) {
+        if (b / 9 == c / 9 && b + 1 == c && c < 27) {
           isTen = 1;
-          if (b % 9 != 0) wait.push(mahjong[b - 1]);
-          if (c % 9 != 8) wait.push(mahjong[c + 1]);
         }
+	if (a / 9 == b / 9 && a + 2 == b && b < 27) { // 간짱 대기
+          isTen = 1;
+        }
+	if (b / 9 == c / 9 && b + 2 == c && c < 27) {
+          isTen = 1;
+        }            
       }
     }
     return;
