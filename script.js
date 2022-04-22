@@ -197,6 +197,7 @@ function check(cnt, array, head, body, after = 0) {
         tmpBody.push(new Array(tmpArray.splice(this.b, 1)[0], tmpArray.splice(this.a, 1)[0], tmpArray.splice(cnt, 1)[0]));
         tmpBody[tmpBody.length - 1].sort(compare);
         check(cnt, tmpArray, head, tmpBody);
+				this.chkArray = array;
       }
     }
   }
@@ -206,17 +207,18 @@ function check(cnt, array, head, body, after = 0) {
     tmpBody = body.slice();
     tmpBody.push(tmpArray.splice(cnt, 3));
     check(cnt, tmpArray, head, tmpBody);
+		this.chkArray = array;
   }
-
-
 
   if (this.chkArray.lastIndexOf(this.chkArray[cnt]) - cnt == 1) { // 머리
     tmpArray = this.chkArray.slice();
     tmpHead = head.slice();
     tmpHead.push(tmpArray.splice(cnt, 2));
     check(cnt, tmpArray, tmpHead, body);
+		this.chkArray = array;
   }
   check(cnt+1, array, head, body);
+	this.chkArray = array;
 }
 
 function doKkang(c) {
@@ -386,21 +388,31 @@ function start() {
       randeck.splice(n, 1);
     }
   }
-
+	
+	
+  // 테스트용
+	
+	/*
+	
+    hand.push(new card(new Array("🀌")));
+    hand.push(new card(new Array("🀍")));
+    hand.push(new card(new Array("🀎")));
+    hand.push(new card(new Array("🀓")));
+    hand.push(new card(new Array("🀓")));
+    hand.push(new card(new Array("🀔")));
+    hand.push(new card(new Array("🀕")));
+    hand.push(new card(new Array("🀖")));
+    hand.push(new card(new Array("🀝")));
+    hand.push(new card(new Array("🀞")));
+    hand.push(new card(new Array("🀞")));
+    hand.push(new card(new Array("🀟")));
+    hand.push(new card(new Array("🀠")));
+	*/
+	
   for (i = 0; i < 13; i++)
     hand.push(new card(deck.splice(0, 1)));
 
-  // 테스트용
-
-  /*
-  for (i = 0; i < 4; i++)
-    hand.push(new card(new Array('？？')));
-  for (i = 0; i < 4; i++)
-    hand.push(new card(new Array('？？')));
-  for (i = 0; i < 4; i++)
-    hand.push(new card(new Array('？？')));
-  hand.push(new card(deck.splice(0, 1)));
-  */
+	
   hand.sort(compare);
   hand.push(new card(deck.splice(0, 1)));
 
