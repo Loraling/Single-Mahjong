@@ -358,13 +358,7 @@ function chkPoint(head, body) { // 추후 후로 기능 넣으면 후로 위치 
         }
       }
     }
-
-
-
   }
-
-
-
 }
 
 function statusPrint(head, body) {
